@@ -21,7 +21,7 @@ public class DataSource {
     try
     {
           // db parameters
-        String url       = "jdbc:mysql://localhost:MariaDB/javaproject";
+        String url       = "jdbc:mysql://localhost:3306/javaproject";
         String user      = "root";
         String password  = "";
 
