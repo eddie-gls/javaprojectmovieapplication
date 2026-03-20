@@ -12,10 +12,10 @@ import java.sql.DriverManager;
  * @author 932562301
  */
 public class DataSource {
-        Connection conn = null;
+        static Connection conn = null;
   
 
-  public Connection createConnection()
+  public static Connection createConnection()
   {
   
     try

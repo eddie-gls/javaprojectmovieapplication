@@ -12,7 +12,7 @@ import java.util.List;
 public interface userDAO {
     
     
-    public void addUser( user user );
+    //public void addUser( user user );
   
     //public Employee getEmployee( int employeeId );
 
