@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author gallo
- */
+
 public class Welcomepage extends javax.swing.JFrame {
 
     /**
@@ -71,6 +72,11 @@ public class Welcomepage extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(0, 153, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton2.setText("Create an account");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,14 +142,78 @@ public class Welcomepage extends javax.swing.JFrame {
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordField1ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+        String email = jTextField1.getText();
+        String password = String.valueOf(jPasswordField1.getPassword());
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        // Vérification simple : champs vides
+        if (email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Veuillez remplir tous les champs.",
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    /**
-     * @param args the command line arguments
-     */
+        // 1️⃣ Vérifier si l'email existe déjà
+        if (user.emailExists(email)) {
+            JOptionPane.showMessageDialog(this,
+                    "Cet email existe déjà !",
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 2️⃣ Créer un nouvel utilisateur avec statut "customer"
+        user newUser = new user(email, password, "customer");
+
+        // 3️⃣ Ajouter l'utilisateur dans la base
+        boolean success = newUser.addUser();
+
+        if (!success) {
+            JOptionPane.showMessageDialog(this,
+                    "Erreur lors de la création du compte.",
+                    "Erreur SQL",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 4️⃣ Compte créé → message de succès
+        JOptionPane.showMessageDialog(this,
+                "Compte créé avec succès !",
+                "Succès",
+                JOptionPane.INFORMATION_MESSAGE);
+
+        // 5️⃣ Redirection vers la page Customer
+        Movielist customerPage = new Movielist();  // ⚠️ mets le VRAI nom de ta classe !
+        customerPage.setVisible(true);
+
+        this.dispose();
+    }
+
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String email = jTextField1.getText();
+        String password = String.valueOf(jPasswordField1.getPassword());
+
+        user u = user.login(email, password);
+
+        if (u == null) {
+            JOptionPane.showMessageDialog(this, "Email ou mot de passe incorrect");
+            return;
+        }
+
+        // Redirection selon statut
+        if (u.getStatut().equalsIgnoreCase("employe")) {
+            new employemenu().setVisible(true);
+        } else {
+            new Movielist().setVisible(true);
+        }
+
+        this.dispose();
+    }
+
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
