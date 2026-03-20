@@ -72,6 +72,11 @@ public class Movielist extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 153, 153));
         jButton2.setText("LOG OUT");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Movie List");
 
@@ -157,7 +162,10 @@ public class Movielist extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new Welcomepage().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
     /**
      * @param args the command line arguments
      */
