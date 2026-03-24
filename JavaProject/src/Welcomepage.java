@@ -155,7 +155,7 @@ public class Welcomepage extends javax.swing.JFrame {
             return;
         }
 
-        // 1️⃣ Vérifier si l'email existe déjà
+        // Vérifier si l'email existe déjà
         if (user.emailExists(email)) {
             JOptionPane.showMessageDialog(this,
                     "Cet email existe déjà !",
@@ -164,10 +164,10 @@ public class Welcomepage extends javax.swing.JFrame {
             return;
         }
 
-        // 2️⃣ Créer un nouvel utilisateur avec statut "customer"
+        // Créer un nouvel utilisateur avec statut "customer"
         user newUser = new user(email, password, "customer");
 
-        // 3️⃣ Ajouter l'utilisateur dans la base
+        // Ajouter l'utilisateur dans la base
         boolean success = newUser.addUser();
 
         if (!success) {
@@ -178,13 +178,13 @@ public class Welcomepage extends javax.swing.JFrame {
             return;
         }
 
-        // 4️⃣ Compte créé → message de succès
+        // Compte créé → message de succès
         JOptionPane.showMessageDialog(this,
                 "Compte créé avec succès !",
                 "Succès",
                 JOptionPane.INFORMATION_MESSAGE);
 
-        // 5️⃣ Redirection vers la page Customer
+        // Redirection vers la page Customer
         Movielist customerPage = new Movielist();  // ⚠️ mets le VRAI nom de ta classe !
         customerPage.setVisible(true);
 
