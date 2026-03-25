@@ -17,11 +17,11 @@ public class movie {
     private String publicationdate;
     private String urltrailer;
     private int runningtime;
-    private float price;
-    private float discount;
+    private double price;
+    private double discount;
     private String picture;
 
-    public movie(String moviename, String genre, String publicationdate, String urltrailer, int runningtime, float price, float discount, String picture) {
+    public movie(String moviename, String genre, String publicationdate, String urltrailer, int runningtime, double price, double discount, String picture) {
         this.moviename = moviename;
         this.genre = genre;
         this.publicationdate = publicationdate;
@@ -60,11 +60,11 @@ public class movie {
         return runningtime;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public float getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
@@ -133,8 +133,8 @@ public class movie {
             st.setString(3, this.publicationdate);
             st.setString(4, this.urltrailer);
             st.setInt(5, this.runningtime);
-            st.setFloat(6, this.price);
-            st.setFloat(7,this.discount);
+            st.setDouble(6, this.price);
+            st.setDouble(7,this.discount);
             st.setString(8,this.picture);
             
 
