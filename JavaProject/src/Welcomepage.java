@@ -143,74 +143,118 @@ public class Welcomepage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordField1ActionPerformed
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+
         String email = jTextField1.getText();
         String password = String.valueOf(jPasswordField1.getPassword());
 
-        // Vérification simple : champs vides
-        if (email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Veuillez remplir tous les champs.",
-                    "Erreur",
-                    JOptionPane.ERROR_MESSAGE);
+        // Vérifier si les champs sont remplis
+        if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Veuillez saisir un email.");
             return;
         }
 
-        // Vérifier si l'email existe déjà
-        if (user.emailExists(email)) {
-            JOptionPane.showMessageDialog(this,
-                    "Cet email existe déjà !",
-                    "Erreur",
-                    JOptionPane.ERROR_MESSAGE);
+        if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Veuillez saisir un mot de passe.");
             return;
         }
 
-        // Créer un nouvel utilisateur avec statut "customer"
-        user newUser = new user(email, password, "customer");
+        try {
+            Connection conn = DataSource.createConnection();
 
-        // Ajouter l'utilisateur dans la base
-        boolean success = newUser.addUser();
+            // Vérifier si l'email existe déjà
+            String checkSql = "SELECT * FROM user WHERE email=?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setString(1, email);
 
-        if (!success) {
-            JOptionPane.showMessageDialog(this,
-                    "Erreur lors de la création du compte.",
-                    "Erreur SQL",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
+            ResultSet rs = checkStmt.executeQuery();
+
+            if (rs.next()) {
+                // Email déjà existant
+                JOptionPane.showMessageDialog(this, "Cet email existe déjà !");
+                conn.close();
+                return;
+            }
+
+            conn.close();
+
+            // ✅ Utilisation de la méthode addUser() pour enregistrer l'utilisateur
+            boolean success = User.addUser(email, password);
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Compte créé avec succès !");
+            } else {
+                JOptionPane.showMessageDialog(this, "Erreur lors de la création du compte.");
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erreur lors de la connexion à la base !");
         }
 
-        // Compte créé → message de succès
-        JOptionPane.showMessageDialog(this,
-                "Compte créé avec succès !",
-                "Succès",
-                JOptionPane.INFORMATION_MESSAGE);
-
-        // Redirection vers la page Customer
-        Movielist customerPage = new Movielist();  // ⚠️ mets le VRAI nom de ta classe !
-        customerPage.setVisible(true);
-
-        this.dispose();
     }
 
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+
         String email = jTextField1.getText();
         String password = String.valueOf(jPasswordField1.getPassword());
 
-        user u = user.login(email, password);
-
-        if (u == null) {
-            JOptionPane.showMessageDialog(this, "Email ou mot de passe incorrect");
+        if (email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
             return;
         }
 
-        // Redirection selon statut
-        if (u.getStatut().equalsIgnoreCase("employe")) {
-            new employemenu().setVisible(true);
-        } else {
-            new Movielist().setVisible(true);
+        try {
+            // ✅ Connexion via ta classe DataSource
+            Connection conn = DataSource.createConnection();
+
+            String sql = "SELECT id, email, password, statut FROM user WHERE email=? AND password=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+
+                // ✅ Création de l'utilisateur avec ta classe User
+                User utilisateur = new User(
+                        rs.getInt("id"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("statut")
+                );
+
+                // ✅ Sauvegarde de l'utilisateur connecté
+                User.setCurrentUser(utilisateur);
+
+                JOptionPane.showMessageDialog(this, "Connexion réussie !");
+
+                // ✅ REDIRECTION SELON LE STATUT
+                String statut = utilisateur.getStatut();
+
+                if (statut.equalsIgnoreCase("employe")) {
+                    new employemenu().setVisible(true);
+                }
+                else  {
+                    new Movielist().setVisible(true);
+                }
+
+                // ✅ fermer la page de connexion
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Email ou mot de passe incorrect !");
+            }
+
+            conn.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erreur lors de la connexion !");
         }
 
-        this.dispose();
     }
 
     public static void main(String args[]) {

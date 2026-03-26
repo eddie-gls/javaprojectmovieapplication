@@ -49,9 +49,19 @@ public class MovieRegister extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(153, 204, 255));
         jButton2.setText("Update movie");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(255, 153, 153));
         jButton3.setText("Back to menu");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -105,6 +115,16 @@ public class MovieRegister extends javax.swing.JFrame {
         new Addmovie().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new updatemovie().setVisible(true);
+        this.dispose();
+    }
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new employemenu().setVisible(true);
+        this.dispose();
+    }
 
     /**
      * @param args the command line arguments
