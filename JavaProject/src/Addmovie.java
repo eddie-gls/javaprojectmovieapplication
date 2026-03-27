@@ -20,6 +20,8 @@ public class Addmovie extends javax.swing.JFrame {
     public Addmovie() {
         initComponents();
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -192,6 +194,39 @@ public class Addmovie extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String moviename = jTextField1.getText();
+        String genre = jTextField2.getText();
+        String publicationdate = jTextField3.getText();
+        String urltrailer = jTextField4.getText();
+        int runningtime = Integer.parseInt(jTextField5.getText());
+        String picture = jTextField6.getText();
+
+        // Vérifier doublon
+        if (Movie.movieExists(moviename)) {
+            JOptionPane.showMessageDialog(this,
+                "Ce film existe déjà !",
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Prix & discount en dur (tu peux les remplacer par des champs)
+        Movie newmovie = new Movie(moviename, genre, publicationdate, urltrailer, runningtime, 10.0, 8.0, picture);
+
+        boolean success = newmovie.addMovie();
+
+        if (!success) {
+            JOptionPane.showMessageDialog(this,
+                "Erreur lors de l'ajout du film.",
+                "Erreur SQL",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this,
+            "Film ajouté avec succès!",
+            "Ajouté",
+            JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
