@@ -155,7 +155,24 @@ public class Movie {
         }
     }
 
+    public static boolean updateField(String moviename, String field, String value) {
+        try {
+            Connection conn = DataSource.createConnection();
+            String sql = "UPDATE movie SET " + field + " = ? WHERE moviename = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
 
+            st.setString(1, value);
+            st.setString(2, moviename);
+
+            st.executeUpdate();
+            conn.close();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     // ✅ Récupérer un film par son nom
     public static Movie getMovieByName(String name) {
 
@@ -189,6 +206,25 @@ public class Movie {
             e.printStackTrace();
         }
         return null;
+    }
+    public static boolean deleteMovie(String moviename) {
+        try {
+            Connection conn = DataSource.createConnection();
+            String sql = "DELETE FROM movie WHERE moviename = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, moviename);
+
+            int rows = st.executeUpdate();
+
+            st.close();
+            conn.close();
+
+            return rows > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
 //a

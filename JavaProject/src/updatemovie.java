@@ -1,3 +1,10 @@
+
+import javax.swing.JOptionPane;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,6 +21,7 @@ public class updatemovie extends javax.swing.JFrame {
      */
     public updatemovie() {
         initComponents();
+        loadMovies();
     }
 
     /**
@@ -60,8 +68,11 @@ public class updatemovie extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setText("Update movie");
 
@@ -71,6 +82,11 @@ public class updatemovie extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(255, 153, 153));
         jButton1.setText("DELETE");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Genre:");
 
@@ -78,6 +94,11 @@ public class updatemovie extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(153, 255, 153));
         jButton2.setText("ADD");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Publication Date:");
 
@@ -109,9 +130,19 @@ public class updatemovie extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(153, 255, 153));
         jButton3.setText("ADD");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(153, 255, 153));
         jButton4.setText("ADD");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Running time:");
 
@@ -119,6 +150,11 @@ public class updatemovie extends javax.swing.JFrame {
 
         jButton5.setBackground(new java.awt.Color(153, 255, 153));
         jButton5.setText("ADD");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("link to image:");
 
@@ -126,6 +162,11 @@ public class updatemovie extends javax.swing.JFrame {
 
         jButton6.setBackground(new java.awt.Color(153, 255, 153));
         jButton6.setText("ADD");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Price:");
 
@@ -135,6 +176,11 @@ public class updatemovie extends javax.swing.JFrame {
 
         jButton7.setBackground(new java.awt.Color(153, 255, 153));
         jButton7.setText("ADD");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Discount price:");
 
@@ -144,6 +190,11 @@ public class updatemovie extends javax.swing.JFrame {
 
         jButton8.setBackground(new java.awt.Color(153, 255, 153));
         jButton8.setText("ADD");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setBackground(new java.awt.Color(255, 153, 153));
         jButton9.setText("BACK");
@@ -228,7 +279,8 @@ public class updatemovie extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addComponent(jButton10)
                         .addGap(129, 129, 129)
-                        .addComponent(jButton9)))
+                        .addComponent(jButton9))
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -286,7 +338,9 @@ public class updatemovie extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton8)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton9)
                     .addComponent(jButton10))
@@ -301,7 +355,10 @@ public class updatemovie extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -315,6 +372,146 @@ public class updatemovie extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        String selectedMovie = (String) jComboBox1.getSelectedItem();
+        String newGenre = jTextField1.getText();
+
+        if (Movie.updateField(selectedMovie, "genre", newGenre)) {
+            JOptionPane.showMessageDialog(this, "Genre mis à jour !");
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        String selectedMovie = (String) jComboBox1.getSelectedItem();
+
+        String day = jTextField2.getText();
+        String month = jTextField3.getText();
+        String year = jTextField4.getText();
+
+        String sqlDate = year + "-" + month + "-" + day;
+
+        if (Movie.updateField(selectedMovie, "publicationdate", sqlDate)) {
+            JOptionPane.showMessageDialog(this, "Date mise à jour !");
+        }
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String selectedMovie = (String) jComboBox1.getSelectedItem();
+        String trailer = jTextField5.getText();
+
+        if (Movie.updateField(selectedMovie, "urltrailer", trailer)) {
+        JOptionPane.showMessageDialog(this, "Trailer mis à jour !");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        String selectedMovie = (String) jComboBox1.getSelectedItem();
+        int time = Integer.parseInt(jTextField6.getText());
+
+        if (Movie.updateField(selectedMovie, "runningtime", String.valueOf(time))) {
+            JOptionPane.showMessageDialog(this, "Durée mise à jour !");
+        }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        String selectedMovie = (String) jComboBox1.getSelectedItem();
+        String picture = jTextField7.getText();
+
+        if (Movie.updateField(selectedMovie, "picture", picture)) {
+            JOptionPane.showMessageDialog(this, "Image mise à jour !");
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        String selectedMovie = (String) jComboBox1.getSelectedItem();
+        double price = Double.parseDouble(jTextField8.getText());
+
+        if (Movie.updateField(selectedMovie, "price", String.valueOf(price))) {
+            JOptionPane.showMessageDialog(this, "Prix mis à jour !");
+        }
+
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        String selectedMovie = (String) jComboBox1.getSelectedItem();
+        double discount = Double.parseDouble(jTextField9.getText());
+
+        if (Movie.updateField(selectedMovie, "discount", String.valueOf(discount))) {
+            JOptionPane.showMessageDialog(this, "Promo mise à jour !");
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        String selectedMovie = (String) jComboBox1.getSelectedItem();
+
+        if (selectedMovie == null) {
+            JOptionPane.showMessageDialog(this,
+            "Aucun film sélectionné.",
+            "Erreur",
+            JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Voulez-vous vraiment supprimer : " + selectedMovie + " ?",
+            "Confirmation",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+
+            boolean success = Movie.deleteMovie(selectedMovie);
+
+            if (success) {
+                JOptionPane.showMessageDialog(this,
+                "Film supprimé avec succès !");
+                loadMovies();  // ⇦ recharge le combobox après suppression
+            } else {
+                JOptionPane.showMessageDialog(this,
+                    "Erreur lors de la suppression du film.",
+                "Erreur SQL",
+                JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private void loadMovies() {
+        try {
+            Connection conn = DataSource.createConnection();
+
+            String sql = "SELECT moviename FROM movie";
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            jComboBox1.removeAllItems(); // vider la liste
+
+            while (rs.next()) {
+                jComboBox1.addItem(rs.getString("moviename"));
+            }
+
+            rs.close();
+            st.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -368,6 +565,7 @@ public class updatemovie extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
