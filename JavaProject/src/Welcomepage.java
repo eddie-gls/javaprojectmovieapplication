@@ -238,7 +238,7 @@ public class Welcomepage extends javax.swing.JFrame {
                     new employemenu().setVisible(true);
                 }
                 else  {
-                    new Movielist().setVisible(true);
+                    new customermenu().setVisible(true);
                 }
 
                 // ✅ fermer la page de connexion
