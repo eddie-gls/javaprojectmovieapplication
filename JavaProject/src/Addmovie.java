@@ -192,48 +192,6 @@ public class Addmovie extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        // Vérify if movie exists
-        String moviename = jTextField1.getText();
-        String genre = jTextField2.getText();
-        String publicationdate = jTextField3.getText();
-        String urltrailer = jTextField4.getText();
-        int runningtime = Integer.parseInt(jTextField5.getText());
-        try{
-            
-        }
-        catch (NumberFormatException e) {
-            System.out.println("Invalid number");
-        }
-        
-        String picture= jTextField6.getText();
-        
-        if (movie.movieExists(moviename)) {
-            JOptionPane.showMessageDialog(this,
-                    "Cet email existe déjà !",
-                    "Erreur",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Créer un nouvel utilisateur avec statut "customer"
-        movie newmovie = new movie(moviename, genre, publicationdate, urltrailer,runningtime,10.0,8.0,picture);
-
-        // Ajouter l'utilisateur dans la base
-        boolean success = newmovie.addMovie();
-
-        if (!success) {
-            JOptionPane.showMessageDialog(this,
-                    "Error while adding the movie.",
-                    "Error SQL",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Compte créé → message de succès
-        JOptionPane.showMessageDialog(this,
-                "Movie added successfully !",
-                "Added",
-                JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
@@ -245,6 +203,8 @@ public class Addmovie extends javax.swing.JFrame {
         new MovieRegister().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+
 
     /**
      * @param args the command line arguments

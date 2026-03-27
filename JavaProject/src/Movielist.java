@@ -8,12 +8,13 @@
  * @author gallo
  */
 public class Movielist extends javax.swing.JFrame {
-
+    private java.util.HashMap<String, Movie> movieMap = new java.util.HashMap<>();
     /**
      * Creates new form Movielist
      */
     public Movielist() {
         initComponents();
+        loadMovies();   // ✅ remplir le menu déroulant
     }
 
     /**
@@ -154,14 +155,60 @@ public class Movielist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadMovies() {
+
+        jComboBox1.removeAllItems();
+        movieMap.clear();
+
+        for (Movie m : Movie.getAllMovies()) {
+            jComboBox1.addItem(m.getName());
+            movieMap.put(m.getName(), m);
+        }
+    }
+
+
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+
+        // ✅ Film sélectionné
+        String movieName = (String) jComboBox1.getSelectedItem();
+        Movie movie = movieMap.get(movieName);
+
+        // ✅ User connecté
+        int userId = User.getCurrentUser().getId();
+
+        // ✅ Nombre de tickets
+        int tickets = Integer.parseInt(jTextField1.getText());
+
+        // ✅ Etudiant ?
+        boolean student = jRadioButton1.isSelected();
+
+        // ✅ TEMPORAIRE en attendant les champs date et schedule
+        String bookingDate = "2026-01-01";   // placeholder provisoire
+        String timeslot = "TO_DEFINE";       // placeholder provisoire
+
+        // ✅ Enregistrement du booking dans la DB
+        boolean success = Booking.addBooking(
+                userId,
+                movie,
+                tickets,
+                bookingDate,
+                timeslot,
+                student
+        );
+
+        if (success) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Booking successful!");
+            new PaymentPage().setVisible(true);
+            this.dispose();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error while booking.");
+        }
+    }
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new Welcomepage().setVisible(true);
         this.dispose();
