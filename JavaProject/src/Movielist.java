@@ -50,7 +50,11 @@ public class Movielist extends javax.swing.JFrame {
         jLabel1.setText("Choose your movie:");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
         jLabel2.setText("Number of tickets:");
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 204));
@@ -85,7 +89,11 @@ public class Movielist extends javax.swing.JFrame {
         jLabel5.setText("Select a date:");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
         jLabel6.setText("Select a schedule:");
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -189,6 +197,49 @@ public class Movielist extends javax.swing.JFrame {
         }
     }
 
+    private void loadDatesForMovie(int movieId) {
+
+        jComboBox2.removeAllItems();
+
+        for (String d : ShowTime.getDatesForMovie(movieId)) {
+            jComboBox2.addItem(d);
+        }
+    }
+
+    private void loadSchedulesForDate(int movieId, String day) {
+
+        jComboBox3.removeAllItems();
+
+        for (String s : ShowTime.getSchedulesForMovieAndDate(movieId, day)) {
+            jComboBox3.addItem(s);
+        }
+    }
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String movieName = (String) jComboBox1.getSelectedItem();
+        Movie movie = movieMap.get(movieName);
+
+        if (movie != null) {
+            loadDatesForMovie(movie.getId());
+            jComboBox3.removeAllItems(); // reset les horaires
+
+        }
+
+
+    }
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
+        String movieName = (String) jComboBox1.getSelectedItem();
+        Movie movie = movieMap.get(movieName);
+
+        String day = (String) jComboBox2.getSelectedItem();
+
+        if (movie != null && day != null) {
+            loadSchedulesForDate(movie.getId(), day);
+        }
+    }
+
+
+
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
@@ -210,8 +261,8 @@ public class Movielist extends javax.swing.JFrame {
         boolean student = jRadioButton1.isSelected();
 
         // ✅ TEMPORAIRE en attendant les champs date et schedule
-        String bookingDate = "2026-01-01";   // placeholder provisoire
-        String timeslot = "TO_DEFINE";       // placeholder provisoire
+        String bookingDate = (String) jComboBox2.getSelectedItem();  // placeholder provisoire
+        String timeslot = (String) jComboBox3.getSelectedItem();       // placeholder provisoire
 
         // ✅ Enregistrement du booking dans la DB
         boolean success = Booking.addBooking(
@@ -223,7 +274,7 @@ public class Movielist extends javax.swing.JFrame {
                 student
         );
 
-        if (success) {
+        if (success && tickets > 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Booking successful!");
             new PaymentPage().setVisible(true);
             this.dispose();
