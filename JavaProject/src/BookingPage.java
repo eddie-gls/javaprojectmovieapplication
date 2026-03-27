@@ -127,7 +127,7 @@ public class BookingPage extends javax.swing.JFrame {
         this.dispose();
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new PaymentPage().setVisible(true);
+        new Movielist().setVisible(true);
         this.dispose();
     }
     /**
