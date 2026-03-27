@@ -170,7 +170,7 @@ public class Movielist extends javax.swing.JFrame {
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton1ActionPerformed
-
+//a
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
         // ✅ Film sélectionné
