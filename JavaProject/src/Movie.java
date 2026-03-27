@@ -15,11 +15,11 @@ public class Movie {
     private double discount;
     private String picture;
 
-    public Movie(String name, String genre, String publicationDate,
+    public Movie(int id, String name, String genre, String publicationDate,
                  String urlTrailer, int runningTime, double price,
                  double discount, String picture) {
 
-        
+        this.id = id;
         this.name = name;
         this.genre = genre;
         this.publicationDate = publicationDate;
@@ -29,6 +29,21 @@ public class Movie {
         this.discount = discount;
         this.picture = picture;
     }
+
+    public Movie(String name, String genre, String publicationDate,
+                 String urlTrailer, int runningTime, double price,
+                 double discount, String picture) {
+
+        this.name = name;
+        this.genre = genre;
+        this.publicationDate = publicationDate;
+        this.urlTrailer = urlTrailer;
+        this.runningTime = runningTime;
+        this.price = price;
+        this.discount = discount;
+        this.picture = picture;
+    }
+
 
     public int getId() { return id; }
     public String getName() { return name; }
@@ -54,7 +69,7 @@ public class Movie {
 
             while (rs.next()) {
                 Movie m = new Movie(
-                        
+                        rs.getInt("id"),
                         rs.getString("moviename"),
                         rs.getString("genre"),
                         rs.getString("publicationdate"),
@@ -186,7 +201,7 @@ public class Movie {
 
             if (rs.next()) {
                 Movie m = new Movie(
-                        
+                        rs.getInt("id"),
                         rs.getString("moviename"),
                         rs.getString("genre"),
                         rs.getString("publicationdate"),

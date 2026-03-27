@@ -7,6 +7,16 @@ public class PaymentPage extends javax.swing.JFrame {
     public PaymentPage() {
         initComponents();
 
+        int userId = User.getCurrentUser().getId();
+        Booking b = Booking.getLastUnpaidBooking(userId);
+
+        if (b != null) {
+            jLabel6.setText("Total Price: " + b.getTotalPrice() + " €");
+        } else {
+            jLabel6.setText("No pending booking");
+        }
+
+
     }
 
     /**
