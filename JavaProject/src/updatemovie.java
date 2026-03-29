@@ -201,6 +201,11 @@ public class updatemovie extends javax.swing.JFrame {
 
         jButton10.setBackground(new java.awt.Color(153, 204, 255));
         jButton10.setText("Update the showtimes");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -490,6 +495,11 @@ public class updatemovie extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        new updateshowtime().setVisible(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
     private void loadMovies() {
         try {
             Connection conn = DataSource.createConnection();

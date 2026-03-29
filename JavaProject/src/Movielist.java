@@ -14,7 +14,7 @@ public class Movielist extends javax.swing.JFrame {
      */
     public Movielist() {
         initComponents();
-        loadMovies();   // ✅ remplir le menu déroulant
+        loadMovies();   // remplir le menu déroulant
     }
 
     /**
@@ -247,24 +247,24 @@ public class Movielist extends javax.swing.JFrame {
 //a
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
-        // ✅ Film sélectionné
+        // Film sélectionné
         String movieName = (String) jComboBox1.getSelectedItem();
         Movie movie = movieMap.get(movieName);
 
-        // ✅ User connecté
+        // User connecté
         int userId = User.getCurrentUser().getId();
 
-        // ✅ Nombre de tickets
+        // Nombre de tickets
         int tickets = Integer.parseInt(jTextField1.getText());
 
-        // ✅ Etudiant ?
+        // Etudiant ?
         boolean student = jRadioButton1.isSelected();
 
-        // ✅ TEMPORAIRE en attendant les champs date et schedule
+        // TEMPORAIRE en attendant les champs date et schedule
         String bookingDate = (String) jComboBox2.getSelectedItem();  // placeholder provisoire
         String timeslot = (String) jComboBox3.getSelectedItem();       // placeholder provisoire
 
-        // ✅ Enregistrement du booking dans la DB
+        //Enregistrement du booking dans la DB
         boolean success = Booking.addBooking(
                 userId,
                 movie,

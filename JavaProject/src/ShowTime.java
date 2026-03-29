@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.*;
 
 public class ShowTime {
 
@@ -55,4 +56,25 @@ public class ShowTime {
 
         return list;
     }
-}
+    
+
+    
+        private static Map<String, List<String>> data = new HashMap<>();
+
+        public ShowTime() {
+            // Initialise seulement une fois
+            if (data.isEmpty()) {
+                data.put("Item 1", new ArrayList<>());
+                data.put("Item 2", new ArrayList<>());
+                data.put("Item 3", new ArrayList<>());
+            }
+        }
+        
+
+        
+        public List<String> getShowtimes(String movie) {
+            return data.get(movie);
+        }
+    }
+
+
