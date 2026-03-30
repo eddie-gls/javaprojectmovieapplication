@@ -186,6 +186,21 @@ public class PaymentPage extends javax.swing.JFrame {
         Booking.setBookingPaid(booking.getId());
 
         JOptionPane.showMessageDialog(this, "Payment successful!");
+        
+        String userEmail = User.getCurrentUser().getEmail();
+
+        String message =
+                "Hello,\n\n" +
+                "Your payment for your movie session has been accepted.\n" +
+            "You can see it in the 'My Reservations' tab.\n\n" +
+            "Thank you!";
+
+        EmailService.sendMail(
+            userEmail,
+            "Payment Confirmation",
+            message 
+        );
+
 
         // Retour ou fermeture si tu veux :
         // new Movielist().setVisible(true);

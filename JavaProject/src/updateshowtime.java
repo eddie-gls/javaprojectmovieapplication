@@ -60,7 +60,10 @@ public class updateshowtime extends javax.swing.JFrame {
                 String sql = "INSERT INTO showtime (movie_id, day, schedule) VALUES (?, ?, ?)";
                 PreparedStatement st = conn.prepareStatement(sql);
                 st.setInt(1, movieId);
-                st.setString(2, fullDate);
+                
+                java.sql.Date sqlDate = java.sql.Date.valueOf(fullDate);
+                st.setDate(2, sqlDate);
+
                 st.setString(3, time);
                 st.executeUpdate();
 

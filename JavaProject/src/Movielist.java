@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+
 /**
  *
  * @author gallo
@@ -15,7 +16,10 @@ public class Movielist extends javax.swing.JFrame {
     public Movielist() {
         initComponents();
         loadMovies();   // remplir le menu déroulant
+        
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,12 +40,12 @@ public class Movielist extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
+        Logout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +59,7 @@ public class Movielist extends javax.swing.JFrame {
                 jComboBox1ActionPerformed(evt);
             }
         });
+
         jLabel2.setText("Number of tickets:");
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 204));
@@ -81,22 +86,25 @@ public class Movielist extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 153, 153));
-        jButton2.setText("LOG OUT");
-
         jLabel4.setText("Movie List");
 
         jLabel5.setText("Select a date:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
             }
         });
+
         jLabel6.setText("Select a schedule:");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Logout.setBackground(new java.awt.Color(255, 102, 102));
+        Logout.setText("LOG OUT");
+        Logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -107,8 +115,8 @@ public class Movielist extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(98, 98, 98)
                         .addComponent(jButton1)
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton2))
+                        .addGap(38, 38, 38)
+                        .addComponent(Logout))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(171, 171, 171)
                         .addComponent(jLabel4))
@@ -168,7 +176,7 @@ public class Movielist extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(Logout))
                 .addGap(5, 5, 5))
         );
 
@@ -215,34 +223,15 @@ public class Movielist extends javax.swing.JFrame {
         }
     }
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
-        String movieName = (String) jComboBox1.getSelectedItem();
-        Movie movie = movieMap.get(movieName);
-
-        if (movie != null) {
-            loadDatesForMovie(movie.getId());
-            jComboBox3.removeAllItems(); // reset les horaires
-
-        }
-
-
-    }
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
-        String movieName = (String) jComboBox1.getSelectedItem();
-        Movie movie = movieMap.get(movieName);
-
-        String day = (String) jComboBox2.getSelectedItem();
-
-        if (movie != null && day != null) {
-            loadSchedulesForDate(movie.getId(), day);
-        }
-    }
+    
+   
 
 
 
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 //a
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,9 +273,43 @@ public class Movielist extends javax.swing.JFrame {
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        String movieName = (String) jComboBox1.getSelectedItem();
+        Movie movie = movieMap.get(movieName);
+        System.out.println("CHANGEMENT FILM : " + movieName);
+
+        if (movie != null) {
+            loadDatesForMovie(movie.getId());
+            jComboBox3.removeAllItems(); // reset les horaires
+
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+        String day = (String) jComboBox2.getSelectedItem();
+        
+        String movieName = (String) jComboBox1.getSelectedItem();
+        Movie movie = movieMap.get(movieName);
+
+        
+
+        if (movie != null && day != null) {
+            loadSchedulesForDate(movie.getId(), day);
+        }
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
+        // TODO add your handling code here:
+        
         new Welcomepage().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+
+    }//GEN-LAST:event_LogoutActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -323,9 +346,9 @@ public class Movielist extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Logout;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;

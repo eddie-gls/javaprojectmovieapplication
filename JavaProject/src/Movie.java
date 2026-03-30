@@ -241,5 +241,34 @@ public class Movie {
             return false;
         }
     }
+    public static Movie getById(int id) {
+        try {
+            Connection conn = DataSource.createConnection();
+            String sql = "SELECT * FROM movie WHERE id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Movie m = new Movie(
+                    rs.getInt("id"),
+                    rs.getString("moviename"),
+                    rs.getString("genre"),
+                    rs.getString("publicationdate"),
+                    rs.getString("urltrailer"),
+                    rs.getInt("runningtime"),
+                    rs.getDouble("price"),
+                    rs.getDouble("discount"),
+                    rs.getString("picture")
+                );
+                conn.close();
+                return m;
+            }
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 //a
