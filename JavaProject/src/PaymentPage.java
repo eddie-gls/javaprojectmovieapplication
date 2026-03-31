@@ -200,6 +200,8 @@ public class PaymentPage extends javax.swing.JFrame {
             "Payment Confirmation",
             message 
         );
+        new customermenu().setVisible(true);   // ou Movielist, ou Dashboard
+        this.dispose();
 
 
         // Retour ou fermeture si tu veux :
