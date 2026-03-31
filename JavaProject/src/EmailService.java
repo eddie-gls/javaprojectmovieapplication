@@ -23,7 +23,7 @@ public class EmailService {
 
             conn.setRequestMethod("POST");
             conn.setRequestProperty("accept", "application/json");
-            conn.setRequestProperty("api-key", "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");
+            conn.setRequestProperty("api-key", "...");
             conn.setRequestProperty("content-type", "application/json; charset=UTF-8");
             conn.setDoOutput(true);
 
