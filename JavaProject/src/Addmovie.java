@@ -242,7 +242,7 @@ public class Addmovie extends javax.swing.JFrame {
         int runningtime = Integer.parseInt(jTextField5.getText());
         String picture = jTextField6.getText();
         double price= Double.parseDouble(jTextField7.getText());
-        double discount=Double.parseDouble(jTextField8.getText());
+        double discount=Double.parseDouble(jTextField9.getText());
 
         // Vérifier doublon
         if (Movie.movieExists(moviename)) {
