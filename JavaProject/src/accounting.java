@@ -45,7 +45,7 @@ public class accounting extends javax.swing.JFrame {
             Connection conn = (Connection) DataSource.createConnection();
 
         // =======================
-        // 1) REMPLIR LE TABLEAU
+        // 1) fill in the table
         // =======================
 
         String sql = "SELECT b.id, m.moviename AS film, b.tickets, b.total_price, b.booking_date " +
@@ -78,13 +78,13 @@ public class accounting extends javax.swing.JFrame {
 
         jTable1.setModel(model);
 
-        // AFFICHER LE TOTAL
+        // DISPLAY TOTAL
         jLabel2.setText("Total : " + total + " £");
 
 
 
         // =======================
-        // 2) GRAPHIQUE TICKETS PAR FILM
+        // 2) TICKETS CHART PER MOVIE
         // =======================
 
         String sqlTickets = "SELECT m.moviename, SUM(b.tickets) AS totalTickets " +
@@ -122,7 +122,7 @@ public class accounting extends javax.swing.JFrame {
 
 
         // =======================
-        // 3) GRAPHIQUE REVENUS 5 DERNIERS JOURS
+        // 3) REVENUE CHART FOR THE LAST 5 DAYS
         // =======================
 
         String sqlRevenue = "SELECT booking_date, SUM(total_price) AS total " +
