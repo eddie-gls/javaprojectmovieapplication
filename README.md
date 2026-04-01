@@ -27,7 +27,7 @@
 4. Troubleshooting:
    - If you encounter missing library errors, verify that you are running the fat JAR with all dependencies included.
    - Ensure WAMP is running and the database is accessible.
-   - For any other issues, please contact: [your.email@example.com]
+   - For any other issues, please contact: [lirone.hassan@edu.ece.fr]
 
 ---
 
