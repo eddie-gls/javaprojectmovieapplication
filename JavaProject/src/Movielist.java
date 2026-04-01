@@ -371,7 +371,6 @@ public class Movielist extends javax.swing.JFrame {
         // TODO add your handling code here:
         String movieName = (String) jComboBox1.getSelectedItem();
         Movie movie = movieMap.get(movieName);
-        System.out.println("CHANGEMENT FILM : " + movieName);
 
         if (movie != null) {
             loadDatesForMovie(movie.getId());
