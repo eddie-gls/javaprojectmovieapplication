@@ -25,10 +25,14 @@ public class Booking {
     private double totalPrice;
     // 0 = unpaid, 1 = paid.
     private int paymentStatus;
+    private String movieName;
+
+
+
 
     public Booking(int id, int filmId, int userId, int tickets,
                    String day, String schedule, boolean student,
-                   double totalPrice, int paymentStatus) {
+                   double totalPrice, int paymentStatus, String movieName) {
 
             // Initialize all fields from database/form values.
         this.id = id;
@@ -40,6 +44,7 @@ public class Booking {
         this.student = student;
         this.totalPrice = totalPrice;
         this.paymentStatus = paymentStatus;
+        this.movieName = movieName;
     }
 
 
@@ -52,6 +57,13 @@ public class Booking {
     public boolean isStudent() { return student; }
     public double getTotalPrice() { return totalPrice; }
     public int getPaymentStatus() { return paymentStatus; }
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
+    }
     
 
     public static boolean addBooking(
@@ -105,7 +117,15 @@ public class Booking {
             Connection conn = DataSource.createConnection();
 
             // Fetch the most recent unpaid booking for the given user.
-            String sql = "SELECT * FROM booking WHERE user_id=? AND payment_status=0 ORDER BY id DESC LIMIT 1";
+            String sql = 
+                "SELECT b.id, b.film_id, b.user_id, b.tickets, b.booking_date, " +
+                "b.timeslot, b.student, b.total_price, b.payment_status, " +
+                "m.moviename " +
+                "FROM booking b " +
+                "JOIN movie m ON b.film_id = m.id " +
+                "WHERE b.user_id=? AND b.payment_status=0 " +
+                "ORDER BY b.id DESC LIMIT 1";
+
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, userId);
 
@@ -122,7 +142,8 @@ public class Booking {
                         rs.getString("timeslot"),
                         rs.getBoolean("student"),
                         rs.getDouble("total_price"),
-                        rs.getInt("payment_status")
+                        rs.getInt("payment_status"), 
+                        rs.getString("moviename")
                 );
                 conn.close();
                 return b;
@@ -178,7 +199,14 @@ public class Booking {
         try {
             Connection conn = DataSource.createConnection();
             // Retrieve all bookings linked to the user account.
-            String sql = "SELECT * FROM booking WHERE user_id=?";
+            String sql = "SELECT b.id, b.film_id, b.user_id, b.tickets, b.booking_date, " +
+        "b.timeslot, b.student, b.total_price, b.payment_status, " +
+        "m.moviename " +
+        "FROM booking b " +
+        "JOIN movie m ON b.film_id = m.id " +
+        "WHERE b.user_id = ? AND b.payment_status = 1 " +
+        "ORDER BY b.booking_date DESC";
+
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
@@ -194,7 +222,8 @@ public class Booking {
                     rs.getString("timeslot"),
                     rs.getBoolean("student"),
                     rs.getDouble("total_price"),
-                    rs.getInt("payment_status")
+                    rs.getInt("payment_status"),
+                    rs.getString("moviename")
                 );
                 list.add(b);
             }

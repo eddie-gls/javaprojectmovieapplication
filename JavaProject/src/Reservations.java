@@ -55,7 +55,7 @@ public class Reservations extends javax.swing.JFrame {
             Movie m = Movie.getById(b.getFilmId());
 
             // Add booking details to the UI row.
-            item.add(new JLabel("Movie: " + m.getName()));
+            item.add(new JLabel("Movie: " + b.getMovieName()));
             item.add(new JLabel("Date: " + b.getDay()));
             item.add(new JLabel("Schedule: " + b.getSchedule()));
             item.add(new JLabel("tickets: " + b.getTickets()+" tickets"));
@@ -129,7 +129,7 @@ public class Reservations extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(153, 153, 153)
                                 .addComponent(jButton1)))
-                        .addGap(0, 134, Short.MAX_VALUE)))
+                        .addGap(0, 423, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -141,7 +141,7 @@ public class Reservations extends javax.swing.JFrame {
                 .addComponent(reservationpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
