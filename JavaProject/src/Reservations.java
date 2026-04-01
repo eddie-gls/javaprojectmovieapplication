@@ -15,6 +15,7 @@ import javax.swing.JPanel;
  *
  * @author gallo
  */
+// Screen that displays all bookings linked to the current user account.
 public class Reservations extends javax.swing.JFrame {
 
     /**
@@ -23,35 +24,48 @@ public class Reservations extends javax.swing.JFrame {
     public Reservations() {
         initComponents();
         
+        // Stack booking rows vertically inside reservation panel.
         reservationpanel.setLayout(new BoxLayout(reservationpanel, BoxLayout.Y_AXIS));
+        // Load bookings as soon as the screen is opened.
         loadUserBookings();
     }
+
+    // Fetch current user's bookings from database layer.
     private void loadUserBookings() {
         int userId = User.getCurrentUser().getId();
         List<Booking> bookings = Booking.getBookingsForUser(userId);
+        // Render all fetched bookings in the panel.
         displayBookings(bookings);
     }
     
+    // Render each booking as one row in the reservation panel.
     private void displayBookings(List<Booking> list) {
 
-        reservationpanel.removeAll(); // vider
+        // Clear previous content before rebuilding the list.
+        reservationpanel.removeAll();
 
         for (Booking b : list) {
 
+            // One container panel per booking line.
             JPanel item = new JPanel();
             item.setLayout(new GridLayout(1, 4));
             item.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            // Load movie details from movie id stored in booking.
             Movie m = Movie.getById(b.getFilmId());
 
+            // Add booking details to the UI row.
             item.add(new JLabel("Movie: " + m.getName()));
             item.add(new JLabel("Date: " + b.getDay()));
             item.add(new JLabel("Schedule: " + b.getSchedule()));
             item.add(new JLabel("tickets: " + b.getTickets()+" tickets"));
             item.add(new JLabel("Total Price: " + b.getTotalPrice()+" £"));
 
+            // Attach row to main reservations panel.
             reservationpanel.add(item);
         }
 
+        // Refresh panel so new rows become visible.
         reservationpanel.revalidate();
         reservationpanel.repaint();
 }
@@ -145,8 +159,9 @@ public class Reservations extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Return to customer menu.
         new customermenu().setVisible(true);
+        // Close current reservations window.
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -178,6 +193,7 @@ public class Reservations extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        // Start Swing UI on Event Dispatch Thread.
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Reservations().setVisible(true);

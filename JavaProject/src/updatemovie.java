@@ -14,6 +14,7 @@ import java.sql.ResultSet;
  *
  * @author gallo
  */
+// Employee form used to update or delete existing movie records.
 public class updatemovie extends javax.swing.JFrame {
 
     /**
@@ -21,6 +22,7 @@ public class updatemovie extends javax.swing.JFrame {
      */
     public updatemovie() {
         initComponents();
+        // Populate movie selector when screen opens.
         loadMovies();
     }
 
@@ -375,109 +377,109 @@ public class updatemovie extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
+        // Action hook for day field (no extra behavior).
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
+        // Action hook for trailer field (no extra behavior).
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        
+        // Update selected movie genre.
         String selectedMovie = (String) jComboBox1.getSelectedItem();
         String newGenre = jTextField1.getText();
 
         if (Movie.updateField(selectedMovie, "genre", newGenre)) {
-            JOptionPane.showMessageDialog(this, "Genre mis à jour !");
+            JOptionPane.showMessageDialog(this, "Genre updated!");
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        // Update publication date using day/month/year fields.
         String selectedMovie = (String) jComboBox1.getSelectedItem();
 
         String day = jTextField2.getText();
         String month = jTextField3.getText();
         String year = jTextField4.getText();
 
+        // Convert UI format to SQL date format (YYYY-MM-DD).
         String sqlDate = year + "-" + month + "-" + day;
 
         if (Movie.updateField(selectedMovie, "publicationdate", sqlDate)) {
-            JOptionPane.showMessageDialog(this, "Date mise à jour !");
+            JOptionPane.showMessageDialog(this, "Publication date updated!");
         }
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // Update trailer URL.
         String selectedMovie = (String) jComboBox1.getSelectedItem();
         String trailer = jTextField5.getText();
 
         if (Movie.updateField(selectedMovie, "urltrailer", trailer)) {
-        JOptionPane.showMessageDialog(this, "Trailer mis à jour !");
+        JOptionPane.showMessageDialog(this, "Trailer updated!");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        // Update running time in minutes.
         String selectedMovie = (String) jComboBox1.getSelectedItem();
         int time = Integer.parseInt(jTextField6.getText());
 
         if (Movie.updateField(selectedMovie, "runningtime", String.valueOf(time))) {
-            JOptionPane.showMessageDialog(this, "Durée mise à jour !");
+            JOptionPane.showMessageDialog(this, "Running time updated!");
         }
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        // Update image link/path.
         String selectedMovie = (String) jComboBox1.getSelectedItem();
         String picture = jTextField7.getText();
 
         if (Movie.updateField(selectedMovie, "picture", picture)) {
-            JOptionPane.showMessageDialog(this, "Image mise à jour !");
+            JOptionPane.showMessageDialog(this, "Image updated!");
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        // Update standard ticket price.
         String selectedMovie = (String) jComboBox1.getSelectedItem();
         double price = Double.parseDouble(jTextField8.getText());
 
         if (Movie.updateField(selectedMovie, "price", String.valueOf(price))) {
-            JOptionPane.showMessageDialog(this, "Prix mis à jour !");
+            JOptionPane.showMessageDialog(this, "Price updated!");
         }
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        // Update discounted ticket price.
         String selectedMovie = (String) jComboBox1.getSelectedItem();
         double discount = Double.parseDouble(jTextField9.getText());
 
         if (Movie.updateField(selectedMovie, "discount", String.valueOf(discount))) {
-            JOptionPane.showMessageDialog(this, "Promo mise à jour !");
+            JOptionPane.showMessageDialog(this, "Discount updated!");
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
+        // Delete selected movie after user confirmation.
         String selectedMovie = (String) jComboBox1.getSelectedItem();
 
         if (selectedMovie == null) {
             JOptionPane.showMessageDialog(this,
-            "Aucun film sélectionné.",
-            "Erreur",
+            "No movie selected.",
+            "Error",
             JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // Ask user confirmation before destructive action.
         int confirm = JOptionPane.showConfirmDialog(
             this,
-            "Voulez-vous vraiment supprimer : " + selectedMovie + " ?",
+            "Do you really want to delete: " + selectedMovie + " ?",
             "Confirmation",
             JOptionPane.YES_NO_OPTION
         );
@@ -488,12 +490,13 @@ public class updatemovie extends javax.swing.JFrame {
 
             if (success) {
                 JOptionPane.showMessageDialog(this,
-                "Film supprimé avec succès !");
-                loadMovies();  // ⇦ recharge le combobox après suppression
+                "Movie deleted successfully!");
+                // Refresh combo box after deletion.
+                loadMovies();
             } else {
                 JOptionPane.showMessageDialog(this,
-                    "Erreur lors de la suppression du film.",
-                "Erreur SQL",
+                    "Error while deleting movie.",
+                "SQL Error",
                 JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -501,15 +504,17 @@ public class updatemovie extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+        // Return to employee menu.
         new employemenu().setVisible(true);
         this.dispose();
     }
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+        // Open showtime update screen.
         new updateshowtime().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    // Load movie names from database into combo box.
     private void loadMovies() {
         try {
             Connection conn = DataSource.createConnection();
@@ -518,7 +523,8 @@ public class updatemovie extends javax.swing.JFrame {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
 
-            jComboBox1.removeAllItems(); // vider la liste
+            // Clear previous values before re-populating.
+            jComboBox1.removeAllItems();
 
             while (rs.next()) {
                 jComboBox1.addItem(rs.getString("moviename"));
@@ -560,6 +566,7 @@ public class updatemovie extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        // Start Swing UI on Event Dispatch Thread.
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new updatemovie().setVisible(true);

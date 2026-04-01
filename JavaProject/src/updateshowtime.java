@@ -12,12 +12,14 @@ import javax.swing.JOptionPane;
  *
  * @author gallo
  */
+// Employee screen used to add or delete showtimes for a selected movie.
 public class updateshowtime extends javax.swing.JFrame {
 
     /**
      * Creates new form updateshowtime
      */
     
+    // Load all movie names into the movie combo box.
     private void loadMovies() {
         jComboBox5.removeAllItems();
         for (Movie m : Movie.getAllMovies()) {
@@ -25,11 +27,15 @@ public class updateshowtime extends javax.swing.JFrame {
         }
     }
 
+    // Optional self-reference (currently unused).
     private updateshowtime manager;
     public updateshowtime() {
         initComponents();
+        // Populate movie selector when the screen opens.
         loadMovies();
     }
+
+    // Insert a showtime row using selected movie, date and time values.
     private void addShowtime() {
             String movieName = (String) jComboBox5.getSelectedItem();
             Movie m = Movie.getMovieByName(movieName);
@@ -39,6 +45,7 @@ public class updateshowtime extends javax.swing.JFrame {
             String month = (String) jComboBox3.getSelectedItem();
             String year = jTextField10.getText();
             
+            // Build SQL date format YYYY-MM-DD from UI fields.
             String fullDate = String.format("%s-%02d-%02d",
                 year,
                 Integer.parseInt(month),
@@ -49,6 +56,7 @@ public class updateshowtime extends javax.swing.JFrame {
             String hour = (String) jComboBox1.getSelectedItem();
             String minute = (String) jComboBox4.getSelectedItem();
             
+            // Build SQL time format HH:mm:ss.
             String time = String.format("%02d:%02d:00",
             Integer.parseInt(hour),
             Integer.parseInt(minute)
@@ -57,10 +65,12 @@ public class updateshowtime extends javax.swing.JFrame {
 
             try {
                 Connection conn = DataSource.createConnection();
+                // Persist new showtime in database.
                 String sql = "INSERT INTO showtime (movie_id, day, schedule) VALUES (?, ?, ?)";
                 PreparedStatement st = conn.prepareStatement(sql);
                 st.setInt(1, movieId);
                 
+                // Store parsed date as java.sql.Date.
                 java.sql.Date sqlDate = java.sql.Date.valueOf(fullDate);
                 st.setDate(2, sqlDate);
 
@@ -74,6 +84,8 @@ public class updateshowtime extends javax.swing.JFrame {
                 e.printStackTrace();
             }
     }
+
+    // Delete one exact showtime (movie + date + time).
     private void deleteShowtime() {
         String movieName = (String) jComboBox5.getSelectedItem();
         Movie m = Movie.getMovieByName(movieName);
@@ -90,12 +102,14 @@ public class updateshowtime extends javax.swing.JFrame {
 
         try {
             Connection conn = DataSource.createConnection();
+            // Delete matching showtime row.
             String sql = "DELETE FROM showtime WHERE movie_id=? AND day=? AND schedule=?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, movieId);
             st.setString(2, fullDate);
             st.setString(3, time);
 
+            // executeUpdate returns number of deleted rows.
             int rows = st.executeUpdate();
             conn.close();
 
@@ -298,19 +312,19 @@ public class updateshowtime extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        // ADD button: create one new showtime.
         addShowtime();
 
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        // DELETE button: remove selected showtime.
         deleteShowtime();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // Return to movie update screen.
         new updatemovie().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -342,6 +356,7 @@ public class updateshowtime extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        // Start Swing UI on the Event Dispatch Thread.
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new updateshowtime().setVisible(true);

@@ -12,6 +12,7 @@ import java.sql.DriverManager;
  * @author 932562301
  */
 public class DataSource {
+        // Shared connection reference used by createConnection().
         static Connection conn = null;
   
 
@@ -20,19 +21,21 @@ public class DataSource {
   
     try
     {
-          // db parameters
+        // Database connection parameters.
         String url       = "jdbc:mysql://localhost:3306/javaproject";
         String user      = "root";
         String password  = "";
 
-        // create a connection to the database
+        // Open a JDBC connection to the MySQL database.
         conn = DriverManager.getConnection(url, user, password);
 
     }
     catch( Exception e )
     {
+      // Print the error to help diagnose connection issues at runtime.
       System.out.println("Error Occured " + e.toString());
     }
+    // Return the opened connection (or null if connection failed).
     return conn;
   }
 }

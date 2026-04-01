@@ -9,14 +9,19 @@ import java.util.List;
  *
  * @author 932562301
  */
+// DAO contract placeholder for future user-related database operations.
 public interface userDAO {
     
     
-    //public void addUser( user user );
+    // Insert a user record.
+    // public void addUser(User user);
   
-    //public Employee getEmployee( int employeeId );
+    // Fetch one employee by id.
+    // public Employee getEmployee(int employeeId);
 
-    //public void updateEmployee( Employee employee );
+    // Update employee data.
+    // public void updateEmployee(Employee employee);
 
-    //public void deleteEmployee( int employeeId );
+    // Delete an employee by id.
+    // public void deleteEmployee(int employeeId);
 }

@@ -12,7 +12,9 @@ import javax.swing.ImageIcon;
  *
  * @author gallo
  */
+// Customer movie selection page: choose movie, date, schedule, then create booking.
 public class Movielist extends javax.swing.JFrame {
+    // Fast lookup map: movie name -> movie object.
     private java.util.HashMap<String, Movie> movieMap = new java.util.HashMap<>();
     /**
      * Creates new form Movielist
@@ -20,13 +22,15 @@ public class Movielist extends javax.swing.JFrame {
     public Movielist() {
         initComponents();
 
-        loadMovies();   // remplir le menu déroulant
+        // Populate movie dropdown at startup.
+        loadMovies();
         
         
     }
     
     
     private void displayMovieImage(Movie movie) {
+        // Display movie poster if a valid image path is available.
         if (movie != null && movie.getPicture()!= null) {
 
             ImageIcon icon = new ImageIcon(movie.getPicture());
@@ -39,13 +43,16 @@ public class Movielist extends javax.swing.JFrame {
     }
     
     private void displayMovieDetails(Movie movie) {
+        // Refresh all detail labels based on selected movie.
         jLabel8.setText("publication date : "+movie.getPublicationDate());
         jLabel9.setText("Running Time : "+movie.getRunningTime() + " min");
         jLabel10.setText("Price : "+movie.getPrice() + " £");
         jLabel11.setText("Student Price : "+movie.getDiscount()+ " £");
         
+        // Display trailer as a clickable link-like label.
         jLabel12.setText("<html><a href='#'>" + movie.getUrlTrailer() + "</a></html>");
 
+        // Open trailer URL in browser when label is clicked.
         jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 try {
@@ -287,9 +294,11 @@ public class Movielist extends javax.swing.JFrame {
 
     private void loadMovies() {
 
+        // Reset movie list before reloading data from database.
         jComboBox1.removeAllItems();
         movieMap.clear();
 
+        // Fill dropdown and cache each movie object by its name.
         for (Movie m : Movie.getAllMovies()) {
             jComboBox1.addItem(m.getName());
             movieMap.put(m.getName(), m);
@@ -298,6 +307,7 @@ public class Movielist extends javax.swing.JFrame {
 
     private void loadDatesForMovie(int movieId) {
 
+        // Reload available dates for the selected movie.
         jComboBox2.removeAllItems();
 
         for (String d : ShowTime.getDatesForMovie(movieId)) {
@@ -307,6 +317,7 @@ public class Movielist extends javax.swing.JFrame {
 
     private void loadSchedulesForDate(int movieId, String day) {
 
+        // Reload available schedules for selected movie + date.
         jComboBox3.removeAllItems();
 
         for (String s : ShowTime.getSchedulesForMovieAndDate(movieId, day)) {
@@ -321,30 +332,29 @@ public class Movielist extends javax.swing.JFrame {
 
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-        
+        // Optional hook for student-discount selection (no extra action for now).
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 //a
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
-        // Film sélectionné
+        // Read currently selected movie from dropdown.
         String movieName = (String) jComboBox1.getSelectedItem();
         Movie movie = movieMap.get(movieName);
 
-        // User connecté
+        // Get current logged-in user id.
         int userId = User.getCurrentUser().getId();
 
-        // Nombre de tickets
+        // Parse ticket quantity entered by the user.
         int tickets = Integer.parseInt(jTextField1.getText());
 
-        // Etudiant ?
+        // Student discount is enabled when "Yes" is selected.
         boolean student = jRadioButton1.isSelected();
 
-        // TEMPORAIRE en attendant les champs date et schedule
-        String bookingDate = (String) jComboBox2.getSelectedItem();  // placeholder provisoire
-        String timeslot = (String) jComboBox3.getSelectedItem();       // placeholder provisoire
+        // Read selected date and timeslot.
+        String bookingDate = (String) jComboBox2.getSelectedItem();
+        String timeslot = (String) jComboBox3.getSelectedItem();
 
-        //Enregistrement du booking dans la DB
+        // Save booking into database.
         boolean success = Booking.addBooking(
                 userId,
                 movie,
@@ -354,27 +364,30 @@ public class Movielist extends javax.swing.JFrame {
                 student
         );
 
+        // On success, continue to payment page.
         if (success && tickets > 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Booking successful!");
             new PaymentPage().setVisible(true);
             this.dispose();
         } else {
+            // Show error when booking failed or ticket count is invalid.
             javax.swing.JOptionPane.showMessageDialog(this, "Error while booking.");
         }
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        // Unused button handler generated by designer.
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+        // When movie changes, refresh related date/schedule and info panels.
         String movieName = (String) jComboBox1.getSelectedItem();
         Movie movie = movieMap.get(movieName);
 
         if (movie != null) {
             loadDatesForMovie(movie.getId());
-            jComboBox3.removeAllItems(); // reset les horaires
+            // Clear schedules until a date is chosen.
+            jComboBox3.removeAllItems();
             displayMovieImage(movie);
             displayMovieDetails(movie);
 
@@ -382,7 +395,7 @@ public class Movielist extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
+        // When date changes, refresh schedules for current movie/date.
         String day = (String) jComboBox2.getSelectedItem();
         
         String movieName = (String) jComboBox1.getSelectedItem();
@@ -396,8 +409,7 @@ public class Movielist extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
-        // TODO add your handling code here:
-        
+        // Return to welcome page and close current window.
         new Welcomepage().setVisible(true);
         this.dispose();
 
@@ -430,6 +442,7 @@ public class Movielist extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        // Start Swing UI on the Event Dispatch Thread.
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Movielist().setVisible(true);

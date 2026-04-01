@@ -1,4 +1,6 @@
 import javax.swing.JOptionPane;
+
+// Payment screen for confirming or cancelling the latest unpaid booking.
 public class PaymentPage extends javax.swing.JFrame {
 
     /**
@@ -7,12 +9,15 @@ public class PaymentPage extends javax.swing.JFrame {
     public PaymentPage() {
         initComponents();
 
+        // Load current user's latest unpaid booking to display total amount.
         int userId = User.getCurrentUser().getId();
         Booking b = Booking.getLastUnpaidBooking(userId);
 
         if (b != null) {
+            // Show amount due when a pending booking exists.
             jLabel6.setText("Total Price: " + b.getTotalPrice() + " £");
         } else {
+            // Inform user that there is no payment to process.
             jLabel6.setText("No pending booking");
         }
 
@@ -159,61 +164,73 @@ public class PaymentPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 
+        // Identify the connected user.
         int userId = User.getCurrentUser().getId();
 
-        // ✅ Supprimer toutes les réservations impayées du user
+        // Cancel all unpaid bookings for this user.
         Booking.deleteAllUnpaidBookings(userId);
 
+        // Confirm cancellation in the UI.
         JOptionPane.showMessageDialog(this, "reservation has been cancelled!");
 
-        // ✅ Redirection vers une autre page
-        new Movielist().setVisible(true);   // ou Movielist, ou Dashboard
+        // Redirect user back to movie selection.
+        new Movielist().setVisible(true);
+        // Close payment page after navigation.
         this.dispose();
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
+        // Identify the connected user.
         int userId = User.getCurrentUser().getId();
 
-        // ✅ Récupérer la dernière réservation impayée
+        // Retrieve the latest unpaid booking for payment processing.
         Booking booking = Booking.getLastUnpaidBooking(userId);
 
         if (booking == null) {
+            // Stop payment flow when there is nothing to pay.
             JOptionPane.showMessageDialog(this, "No unpaid booking found.");
             return;
         }
 
-        // ✅ Marquer la réservation comme payée
+        // Mark booking as paid in database.
         Booking.setBookingPaid(booking.getId());
 
+        // Notify user that payment succeeded.
         JOptionPane.showMessageDialog(this, "Payment successful!");
         
+        // Fetch recipient email for confirmation message.
         String userEmail = User.getCurrentUser().getEmail();
 
+        // Build plain-text confirmation email body.
         String message =
                 "Hello,\n\n" +
                 "Your payment for your movie session has been accepted.\n" +
             "You can see it in the 'My Reservations' tab.\n\n" +
             "Thank you!";
 
+        // Send confirmation email through external email service.
         EmailService.sendMail(
             userEmail,
             "Payment Confirmation",
             message 
         );
-        new customermenu().setVisible(true);   // ou Movielist, ou Dashboard
+
+        // Return user to customer menu after successful payment.
+        new customermenu().setVisible(true);
+        // Close payment window.
         this.dispose();
 
 
-        // Retour ou fermeture si tu veux :
+        // Alternative navigation kept as reference:
         // new Movielist().setVisible(true);
         // this.dispose();
     }
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
+        // Action hook for card number field (currently no extra behavior).
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
+        // Action hook for expiration date field (currently no extra behavior).
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
@@ -244,6 +261,7 @@ public class PaymentPage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        // Start Swing UI on the Event Dispatch Thread.
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PaymentPage().setVisible(true);
