@@ -21,7 +21,7 @@
    - Otherwise, make sure to start the 'WelcomePage' class.
 
 4. Troubleshooting:
-   - If you encounter missing library errors, verify that you are running qll .JAR dependencies.
+   - If you encounter missing library errors, verify that you are running all .JAR dependencies.
    - Ensure WAMP is running and the database is accessible.
    - For any other issues, please contact: [lirone.hassan@edu.ece.fr]
 
