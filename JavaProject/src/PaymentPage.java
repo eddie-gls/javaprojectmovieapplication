@@ -11,7 +11,7 @@ public class PaymentPage extends javax.swing.JFrame {
         Booking b = Booking.getLastUnpaidBooking(userId);
 
         if (b != null) {
-            jLabel6.setText("Total Price: " + b.getTotalPrice() + " €");
+            jLabel6.setText("Total Price: " + b.getTotalPrice() + " £");
         } else {
             jLabel6.setText("No pending booking");
         }

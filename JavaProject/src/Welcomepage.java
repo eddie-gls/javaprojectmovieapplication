@@ -200,7 +200,7 @@ public class Welcomepage extends javax.swing.JFrame {
         String password = String.valueOf(jPasswordField1.getPassword());
 
         if (email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
+            JOptionPane.showMessageDialog(this, "Please fill in all the fields.");
             return;
         }
 
@@ -229,7 +229,7 @@ public class Welcomepage extends javax.swing.JFrame {
                 // ✅ Sauvegarde de l'utilisateur connecté
                 User.setCurrentUser(utilisateur);
 
-                JOptionPane.showMessageDialog(this, "Connexion réussie !");
+                JOptionPane.showMessageDialog(this, "Connection successful !");
 
                 // ✅ REDIRECTION SELON LE STATUT
                 String statut = utilisateur.getStatut();
@@ -245,14 +245,14 @@ public class Welcomepage extends javax.swing.JFrame {
                 this.dispose();
 
             } else {
-                JOptionPane.showMessageDialog(this, "Email ou mot de passe incorrect !");
+                JOptionPane.showMessageDialog(this, "Email or password incorrect !");
             }
 
             conn.close();
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erreur lors de la connexion !");
+            JOptionPane.showMessageDialog(this, "error while connection !");
         }
 
     }

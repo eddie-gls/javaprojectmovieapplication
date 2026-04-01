@@ -39,10 +39,10 @@ public class Movielist extends javax.swing.JFrame {
     }
     
     private void displayMovieDetails(Movie movie) {
-        jLabel8.setText(movie.getPublicationDate());
-        jLabel9.setText(movie.getRunningTime() + " min");
-        jLabel10.setText(movie.getPrice() + " £");
-        jLabel11.setText(movie.getDiscount()+ " £");
+        jLabel8.setText("publication date : "+movie.getPublicationDate());
+        jLabel9.setText("Running Time : "+movie.getRunningTime() + " min");
+        jLabel10.setText("Price : "+movie.getPrice() + " £");
+        jLabel11.setText("Student Price : "+movie.getDiscount()+ " £");
         
         jLabel12.setText("<html><a href='#'>" + movie.getUrlTrailer() + "</a></html>");
 
@@ -55,7 +55,7 @@ public class Movielist extends javax.swing.JFrame {
                 }
             }
         });
-        jLabel13.setText(movie.getGenre());
+        jLabel13.setText("genre : "+movie.getGenre());
 
         
     }
